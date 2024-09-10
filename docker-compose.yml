@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  api-gateway:
+    build: ./nginx
+    ports:
+      - "8080:80"
+    networks:
+      - app-network
+    depends_on:
+      - auth
+      - payments
+      - products
+
+  auth:
+    build: ./services/auth
+    networks:
+      - app-network
+
+  payments:
+    build: ./services/payments
+    networks:
+      - app-network
+
+  products:
+    build: ./services/products
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
